@@ -19,7 +19,7 @@ struct MatchListView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
                 Color.accentColor.edgesIgnoringSafeArea(.all)
                 List(viewModel.matches, id: \.id) { match in
@@ -27,11 +27,12 @@ struct MatchListView: View {
                         .cornerRadius(16)
                         .padding(2)
                         .listRowBackground(Color.accentColor)
+                        .onAppear {
+                            viewModel.cardAppeared(match)
+                        }
                 }
-                .onAppear {
-                    if !reachedLastPage && !viewModel.isLoading {
-                        viewModel.loadData()
-                    }
+                .refreshable {
+                    await viewModel.refreshData()
                 }
                 .scrollContentBackground(.hidden)
                 .navigationBarTitle("Partidas", displayMode: .large)
@@ -41,7 +42,7 @@ struct MatchListView: View {
             do {
                 viewModel.loadData()
                 try await Task.sleep(for: Duration.seconds(2))
-                if viewModel.isLoading {
+                DispatchQueue.main.async {
                     self.launchScreenState.dismiss()
                 }
             } catch {

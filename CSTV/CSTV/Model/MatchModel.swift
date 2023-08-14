@@ -40,14 +40,13 @@ struct Match: Codable {
         }
     }
     
-    var parsedStatus: MatchStatus {
-        switch status {
-        case "canceled": return .canceled
-        case "finished": return .finished
-        case "not_started": return .notStarted
-        case "running": return .running
-        case "postponed": return .postponed
-        default: return .unknow
+    var parsedStatus: String {
+        switch self.status {
+        case "finished": return "Finalizado"
+        case "not_started": return "Agendado"
+        case "running": return "Em Progresso"
+        default:
+            return "TBA"
         }
     }
     

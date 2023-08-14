@@ -15,9 +15,9 @@ struct MatchCardView: View {
             Color.accentColor
                 .edgesIgnoringSafeArea(.all)
             VStack(alignment: .trailing, spacing: 0) {
-                HStack(spacing: 0) {
+                HStack(alignment: .center, spacing: 0) {
                     Text(match.parsedDate ?? "TBA")
-                        .font(Font.custom("Roboto", size: 12).weight(.bold))
+                        .font(Font.custom("Roboto", size: 8).weight(.bold))
                         .foregroundColor(.white)
                 }
                 .padding(8)
@@ -46,7 +46,10 @@ struct MatchCardView: View {
                             )
                     )
                 
-                HStack(spacing: 8) {
+                Divider()
+                    .background(Color.white)
+                
+                HStack(alignment: .center, spacing: 8) {
                     AsyncImage(url: URL(string: match.league.imageURL ?? "")) { image in
                         image
                             .resizable()
@@ -60,12 +63,20 @@ struct MatchCardView: View {
                     Text("\(match.league.name) + \(match.serie.name ?? "TBA")")
                         .font(Font.custom("Roboto", size: 8))
                         .foregroundColor(.white)
+                        .layoutPriority(1)
+                    
+                    Spacer()
+                    
+                    Text("\(match.parsedStatus)")
+                        .font(Font.custom("Roboto", size: 8))
+                        .foregroundColor(.white)
+                        .padding(8)
                 }
                 .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 8))
-                .frame(width: 313)
+                .frame(width: 313, alignment: .leading)
             }
-            .frame(width: 320, height: 180)
-            .foregroundColor(Color.white)
+            .padding(0)
+            .frame(minWidth: 312, idealWidth: 312, alignment: .trailing)
             .background(Color(red: 0.15, green: 0.15, blue: 0.22))
             .cornerRadius(16)
         }

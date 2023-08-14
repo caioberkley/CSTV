@@ -153,8 +153,8 @@
 		C2F360AA2A85993B00E0C3DA /* LaunchScreen */ = {
 			isa = PBXGroup;
 			children = (
-				C2F3609F2A840B5200E0C3DA /* LaunchScreenStateManager.swift */,
 				C2F3609A2A83ECFE00E0C3DA /* LaunchScreenView.swift */,
+				C2F3609F2A840B5200E0C3DA /* LaunchScreenStateManager.swift */,
 			);
 			path = LaunchScreen;
 			sourceTree = "<group>";

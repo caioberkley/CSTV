@@ -15,25 +15,17 @@ enum NetworkError: Error {
     case other(Error)
 }
 
-enum MatchStatus: String {
-    case canceled
-    case finished
-    case notStarted = "not_started"
-    case running
-    case postponed
-    case unknow
-}
 class MatchService {
     private let baseURL = "https://api.pandascore.co/csgo/matches/"
     private let token = "0sk39qpRRhia8J1x3HR8a3b0nPywqQOVWiG1PWFsCLLmChMasoM"
     
     func loadRunningMatches(pageNumber: Int, pageSize: Int) -> AnyPublisher<[Match], Error> {
-        let route = "running?page[number]=\(pageNumber)&page[size]=\(pageSize)"
+        let route = "running?page=\(pageNumber)&per_page=\(pageSize)"
         return request(route: route, responseType: [Match].self)
     }
     
     func loadUpcomingMatches(pageNumber: Int, pageSize: Int) -> AnyPublisher<[Match], Error> {
-        let route = "upcoming?page[number]=\(pageNumber)&page[size]=\(pageSize)"
+        let route = "upcoming?page=\(pageNumber)&per_page=\(pageSize)"
         return request(route: route, responseType: [Match].self)
     }
     
