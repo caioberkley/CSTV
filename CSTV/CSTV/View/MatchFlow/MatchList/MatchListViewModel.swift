@@ -17,14 +17,22 @@ class MatchListViewViewModel: ObservableObject {
     private var reachedLastPage: Bool = false
     private let service = MatchService()
     
-    func loadData() {
-        guard !isFetchingNextPage else { return }
+    let pageSize = 20
+    
+    func loadNextPageIfNeeded(match: Match) {
+        if let lastMatch = matches.last, match.id == lastMatch.id {
+            loadNextPage()
+        }
+    }
+    
+    private func loadNextPage() {
+        guard !isFetchingNextPage && !reachedLastPage else { return }
         
         isFetchingNextPage = true
         let nextPage = currentPage + 1
         
-        let runningMatchesPublisher = service.loadRunningMatches(pageNumber: nextPage, pageSize: 5)
-        let upcomingMatchesPublisher = service.loadUpcomingMatches(pageNumber: nextPage, pageSize: 5)
+        let runningMatchesPublisher = service.loadRunningMatches(pageNumber: nextPage, pageSize: pageSize)
+        let upcomingMatchesPublisher = service.loadUpcomingMatches(pageNumber: nextPage, pageSize: pageSize)
         
         Publishers.CombineLatest(runningMatchesPublisher, upcomingMatchesPublisher)
             .receive(on: DispatchQueue.main)
@@ -51,13 +59,7 @@ class MatchListViewViewModel: ObservableObject {
             self.matches = []
         }
         reachedLastPage = false
-        loadData()
-    }
-    
-    func cardAppeared(_ card: Match) {
-        if let lastMatch = matches.last, card.id == lastMatch.id {
-            reachedLastPage = true
-            loadData()
-        }
+        loadNextPage()
     }
 }
+

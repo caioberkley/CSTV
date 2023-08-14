@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import Combine
 
 struct MatchListView: View {
     @EnvironmentObject private var launchScreenState: LaunchScreenStateManager
     @StateObject private var viewModel = MatchListViewViewModel()
     @State private var reachedLastPage = false
+    @State private var cancellables: [AnyCancellable] = []
     
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(.white)]
@@ -28,7 +30,7 @@ struct MatchListView: View {
                         .padding(2)
                         .listRowBackground(Color.accentColor)
                         .onAppear {
-                            viewModel.cardAppeared(match)
+                            viewModel.loadNextPageIfNeeded(match: match)
                         }
                 }
                 .refreshable {
@@ -40,19 +42,17 @@ struct MatchListView: View {
         }
         .task {
             do {
-                viewModel.loadData()
-                try await Task.sleep(for: Duration.seconds(2))
+                await viewModel.refreshData()
+                try? await Task.sleep(for: Duration.seconds(2))
                 DispatchQueue.main.async {
                     self.launchScreenState.dismiss()
                 }
-            } catch {
-                print("Error loading data: \(error)")
             }
         }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct MatchListView_Previews: PreviewProvider {
     static var previews: some View {
         MatchListView()
             .environmentObject(LaunchScreenStateManager())

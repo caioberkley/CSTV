@@ -29,8 +29,8 @@ class MatchService {
         return request(route: route, responseType: [Match].self)
     }
     
-    func loadMatchOpponents(for match: Match) -> AnyPublisher<MatchOpponentDetailResult, Error> {
-        let route = "\(match.id)/opponents"
+    func loadMatchDetail(for match: Match) -> AnyPublisher<MatchOpponentDetailResult, Error> {
+        let route = "\(match.id)"
         return request(route: route, responseType: MatchOpponentDetailResult.self)
     }
     
