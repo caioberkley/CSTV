@@ -23,10 +23,6 @@ struct MatchOpponent: Codable {
 }
 
 //MARK: - Match Detail Model
-struct MatchOpponentDetailResult: Codable {
-    let opponents: [MatchOpponentDetail]
-}
-
-struct MatchOpponentDetail: Codable {
+struct MatchPlayersDetailResult: Codable {
     let players: [Player]
 }

@@ -22,7 +22,7 @@ struct MatchCardView: View {
                         .foregroundColor(.white)
                         .frame(width: 58, height: 25)
                         .background(match.parsedDate == "AGORA" ? Color.red : Color.gray)
-                        .cornerRadius(16)
+                        .cornerRadius(radius: 16, corners: [.topRight, .bottomLeft])
                 }
                 .padding(EdgeInsets(top: 0, leading: 8, bottom: 8, trailing: 0))
                 
@@ -59,10 +59,10 @@ struct MatchCardView: View {
                     
                     Text("\(match.parsedStatus)")
                         .font(Font.custom("Roboto", size: 8))
-                        .foregroundColor(.white)
+                        .foregroundColor(match.parsedStatus == "Em Progresso" ? Color.green : Color.yellow)
                         .padding(8)
                 }
-                .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 8))
             }
             .background(Color(red: 0.15, green: 0.15, blue: 0.22))
             .cornerRadius(16)
@@ -87,6 +87,26 @@ struct TeamView: View {
             Text(team?.name ?? "TBA")
                 .font(Font.custom("Roboto", size: 10))
                 .foregroundColor(.white)
-        }
+        }.padding(.bottom, 18)
+    }
+}
+
+struct RoundedCorner: Shape {
+    let radius: CGFloat
+    let corners: UIRectCorner
+    
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(
+            roundedRect: rect,
+            byRoundingCorners: corners,
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
+        return Path(path.cgPath)
+    }
+}
+
+extension View {
+    func cornerRadius(radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape(RoundedCorner(radius: radius, corners: corners))
     }
 }

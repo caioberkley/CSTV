@@ -18,22 +18,25 @@ struct MatchListView: View {
                 Color.accentColor.ignoresSafeArea()
                 List(viewModel.matches, id: \.id) { match in
                     NavigationLink(
-                        destination: MatchDetailView(match: match, teamPlayers: [], teamOpponents: [])
+                        destination: MatchDetailView(match: match)
                     ) {
                         MatchCardView(match: match)
                     }
                     .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 0))
+                    .listRowInsets(EdgeInsets(top: 0, leading: 24, bottom: 24, trailing: 6))
                     .listRowBackground(Color.accentColor.ignoresSafeArea())
                     .onAppear {
                         viewModel.loadNextPageIfNeeded(match: match)
                     }
                 }
+                .opacity(viewModel.matches.isEmpty ? 0 : 1)
+                .padding(.top, 24)
                 .preferredColorScheme(.dark)
                 .refreshable {
                     await viewModel.refreshData()
                 }
-                .scrollContentBackground(.hidden)
+                .listStyle(.plain)
+                .background(Color.accentColor.ignoresSafeArea())
             }
             .navigationBarTitle("Partidas", displayMode: .large)
         }
@@ -47,6 +50,7 @@ struct MatchListView: View {
         .onDisappear {
             viewModel.cancel()
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

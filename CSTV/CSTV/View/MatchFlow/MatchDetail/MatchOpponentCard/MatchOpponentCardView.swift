@@ -53,6 +53,6 @@ struct MatchOpponentCardView: View {
 
 struct MatchOpponentCardView_Previews: PreviewProvider {
     static var previews: some View {
-        MatchOpponentCardView(player: Player(name: "Nickname", firstName: "First", lastName: "Last", imageURL: ""))
+        MatchOpponentCardView(player: Player(id: 0, name: "Nickname", firstName: "First", lastName: "Last", imageURL: ""))
     }
 }

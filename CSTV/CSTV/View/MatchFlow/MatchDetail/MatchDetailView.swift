@@ -4,40 +4,37 @@
 //
 //  Created by Caio Berkley on 09/08/23.
 //
+
 import SwiftUI
 
 struct MatchDetailView: View {
-    let match: Match
-    let teamPlayers: [Player]
-    let teamOpponents: [Player]
+    @StateObject private var viewModel: MatchDetailViewModel
     
-    let viewModel = MatchListViewViewModel()
-    
+    init(match: Match) {
+        _viewModel = StateObject(wrappedValue: MatchDetailViewModel(match: match, matchService: MatchService()))
+    }
+
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 Color.accentColor.ignoresSafeArea()
-                List(viewModel.matches, id: \.id) { match in
-                    MatchCardView(match: match)
-                        .cornerRadius(16)
-                        .padding(2)
-                        .listRowBackground(Color.accentColor)
-                        .onAppear {
-                            viewModel.loadNextPageIfNeeded(match: match)
-                        }
+                VStack(spacing: 20) {
+                    MatchDetailHeaderView(match: viewModel.match)
+                    
+                    
+                    
+                    Spacer()
                 }
-                .refreshable {
-                    await viewModel.refreshData()
-                }
-                .scrollContentBackground(.hidden)
+                .padding()
+                .preferredColorScheme(.dark)
+                .navigationBarTitle("\(viewModel.match.league.name) + \(viewModel.match.serie.name ?? "TBA")", displayMode: .inline)
             }
-            .navigationBarTitle("\(match.league.name) + \(match.serie.name ?? "TBA")", displayMode: .inline)
         }
     }
 }
 
 struct MatchDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MatchDetailView(match: Match(scheduledAt: "TBA", name: "TBA", id: 0, status: "TBA", opponents: [], league: League(name: "TBA", imageURL: ""), serie: Serie(name: "TBA")), teamPlayers: [], teamOpponents: [])
+        MatchDetailView(match: Match(scheduledAt: "TBA", name: "TBA", id: 0, status: "TBA", opponents: [MatchOpponentResult(opponent: MatchOpponent(name: "TBA", imageURL: ""))], league: League(name: "TBA", imageURL: ""), serie: Serie(name: "TBA")))
     }
 }

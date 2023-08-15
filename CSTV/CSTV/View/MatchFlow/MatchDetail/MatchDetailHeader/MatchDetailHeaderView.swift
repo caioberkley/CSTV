@@ -12,8 +12,10 @@ struct MatchDetailHeaderView: View {
     
     var body: some View {
         ZStack {
-            Color.accentColor
-                .edgesIgnoringSafeArea(.all)
+            Rectangle()
+                .foregroundColor(Color.accentColor)
+                .frame(maxWidth: .infinity, maxHeight: 156)
+                
             VStack(alignment: .trailing, spacing: 0) {
                 HStack(spacing: 20) {
                     TeamView(team: match.team1)
@@ -24,7 +26,7 @@ struct MatchDetailHeaderView: View {
                     
                     TeamView(team: match.team2)
                 }
-                .padding(12)
+                .padding(0)
                 .frame(width: 313, height: 119)
                 
                 Rectangle()
@@ -43,7 +45,7 @@ struct MatchDetailHeaderView: View {
                   .font(Font.custom("Roboto", size: 12).weight(.bold))
                   .foregroundColor(.white)
             }
-            .padding(EdgeInsets(top: 160, leading: 8, bottom: 8, trailing: 8))
+            .padding(EdgeInsets(top: 150, leading: 8, bottom: 20, trailing: 8))
         }
     }
 }
