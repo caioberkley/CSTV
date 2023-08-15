@@ -16,7 +16,7 @@ struct MatchDetailView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color.accentColor.edgesIgnoringSafeArea(.all)
+                Color.accentColor.ignoresSafeArea()
                 List(viewModel.matches, id: \.id) { match in
                     MatchCardView(match: match)
                         .cornerRadius(16)
@@ -30,8 +30,8 @@ struct MatchDetailView: View {
                     await viewModel.refreshData()
                 }
                 .scrollContentBackground(.hidden)
-                .navigationBarTitle("\(match.league.name) + \(match.serie.name ?? "TBA")", displayMode: .large)
             }
+            .navigationBarTitle("\(match.league.name) + \(match.serie.name ?? "TBA")", displayMode: .inline)
         }
     }
 }

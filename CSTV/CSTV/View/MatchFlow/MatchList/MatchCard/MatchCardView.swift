@@ -14,15 +14,17 @@ struct MatchCardView: View {
         ZStack {
             Color.accentColor
                 .edgesIgnoringSafeArea(.all)
-            VStack(alignment: .trailing, spacing: 0) {
-                HStack(alignment: .center, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
+                HStack(spacing: 0) {
+                    Spacer()
                     Text(match.parsedDate ?? "TBA")
                         .font(Font.custom("Roboto", size: 8).weight(.bold))
                         .foregroundColor(.white)
+                        .frame(width: 58, height: 25)
+                        .background(match.parsedDate == "AGORA" ? Color.red : Color.gray)
+                        .cornerRadius(16)
                 }
-                .padding(8)
-                .background(match.parsedDate == "AGORA" ? Color.red : Color.gray)
-                .cornerRadius(16)
+                .padding(EdgeInsets(top: 0, leading: 8, bottom: 8, trailing: 0))
                 
                 HStack(spacing: 20) {
                     TeamView(team: match.team1)
@@ -34,31 +36,19 @@ struct MatchCardView: View {
                     TeamView(team: match.team2)
                 }
                 .padding(12)
-                .frame(width: 313, height: 119)
-                
-                Rectangle()
-                    .foregroundColor(.clear)
-                    .frame(width: 313, height: 0)
-                    .overlay(
-                        Rectangle()
-                            .stroke(
-                                Color(red: 1, green: 1, blue: 1).opacity(0.20), lineWidth: 0.50
-                            )
-                    )
                 
                 Divider()
                     .background(Color.white)
                 
-                HStack(alignment: .center, spacing: 8) {
+                HStack {
                     AsyncImage(url: URL(string: match.league.imageURL ?? "")) { image in
                         image
                             .resizable()
                             .frame(width: 16, height: 16)
                     } placeholder: {
-                        Image(systemName: "questionmark.circle")
-                            .resizable()
+                        Color.gray
                             .frame(width: 16, height: 16)
-                            .foregroundColor(.white)
+                            .cornerRadius(30)
                     }
                     Text("\(match.league.name) + \(match.serie.name ?? "TBA")")
                         .font(Font.custom("Roboto", size: 8))
@@ -72,11 +62,8 @@ struct MatchCardView: View {
                         .foregroundColor(.white)
                         .padding(8)
                 }
-                .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 8))
-                .frame(width: 313, alignment: .leading)
+                .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
             }
-            .padding(0)
-            .frame(minWidth: 312, idealWidth: 312, alignment: .trailing)
             .background(Color(red: 0.15, green: 0.15, blue: 0.22))
             .cornerRadius(16)
         }
@@ -93,10 +80,9 @@ struct TeamView: View {
                     .resizable()
                     .frame(width: 60, height: 60)
             } placeholder: {
-                Image(systemName: "questionmark.circle")
-                    .resizable()
+                Color.gray
                     .frame(width: 60, height: 60)
-                    .foregroundColor(.white)
+                    .cornerRadius(30)
             }
             Text(team?.name ?? "TBA")
                 .font(Font.custom("Roboto", size: 10))

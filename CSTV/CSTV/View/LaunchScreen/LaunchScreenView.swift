@@ -26,18 +26,13 @@ struct LaunchScreenView: View {
             .foregroundColor(Color.accentColor)
     }
     
-    @ViewBuilder
-    private var backgroundColor: some View {
-        Color.accentColor
-    }
-    
     private let animationTimer = Timer
         .publish(every: 0.5, on: .current, in: .common)
         .autoconnect()
     
     var body: some View {
         ZStack {
-            backgroundColor
+            Color.accentColor.ignoresSafeArea()
             image
         }.onReceive(animationTimer) { timerValue in
             updateAnimation()

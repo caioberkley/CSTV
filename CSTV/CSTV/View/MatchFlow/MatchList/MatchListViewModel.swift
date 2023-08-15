@@ -11,11 +11,12 @@ import Combine
 class MatchListViewViewModel: ObservableObject {
     @Published var matches: [Match] = []
     
-    private var cancellables: Set<AnyCancellable> = []
     private var currentPage: Int = 0
     private var isFetchingNextPage: Bool = false
     private var reachedLastPage: Bool = false
     private let service = MatchService()
+    
+    private var cancellables = Set<AnyCancellable>()
     
     let pageSize = 20
     
@@ -25,7 +26,7 @@ class MatchListViewViewModel: ObservableObject {
         }
     }
     
-    private func loadNextPage() {
+    func loadNextPage() {
         guard !isFetchingNextPage && !reachedLastPage else { return }
         
         isFetchingNextPage = true
@@ -53,13 +54,29 @@ class MatchListViewViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    func initialDataLoad() async {
+        await fetchData()
+    }
+    
     func refreshData() async {
         currentPage = 0
         DispatchQueue.main.async {
             self.matches = []
         }
         reachedLastPage = false
-        loadNextPage()
+        await fetchData()
+    }
+    
+    func cancel() {
+        cancellables.forEach { $0.cancel() }
+    }
+    
+    func fetchData() async {
+        do {
+            loadNextPage()
+            try await Task.sleep(for: .seconds(1))
+        } catch {
+            print("Error fetching data: \(error)")
+        }
     }
 }
-
