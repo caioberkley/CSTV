@@ -11,7 +11,7 @@ import Combine
 class MatchDetailViewModel: ObservableObject {
     private let matchService: MatchService
     private var cancellables: Set<AnyCancellable> = []
-
+    
     @Published var match: Match
     @Published var teamPlayers: [Player] = []
     @Published var teamOpponents: [Player] = []
@@ -33,7 +33,8 @@ class MatchDetailViewModel: ObservableObject {
                     print("Error loading match detail: \(error)")
                 }
             }, receiveValue: { [weak self] matchDetailResult in
-                self?.teamPlayers = matchDetailResult.players
+                self?.teamPlayers = matchDetailResult.team1
+                self?.teamOpponents = matchDetailResult.team2
             })
             .store(in: &cancellables)
     }

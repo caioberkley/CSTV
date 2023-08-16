@@ -16,22 +16,22 @@ enum NetworkError: Error {
 }
 
 class MatchService {
-    private let baseURL = "https://api.pandascore.co/csgo/matches/"
-    private let token = "0sk39qpRRhia8J1x3HR8a3b0nPywqQOVWiG1PWFsCLLmChMasoM"
+    private let baseURL = "https://api.pandascore.co/"
+    private let token = "jGnYmRlpA4TbLRbj8f7Ei2er50zWpiB0sEX7vZZXVPzAtQ-tb1o"
     
     func loadRunningMatches(pageNumber: Int, pageSize: Int) -> AnyPublisher<[Match], Error> {
-        let route = "running?page=\(pageNumber)&per_page=\(pageSize)"
+        let route = "csgo/matches/running?page=\(pageNumber)&per_page=\(pageSize)"
         return request(route: route, responseType: [Match].self)
     }
     
     func loadUpcomingMatches(pageNumber: Int, pageSize: Int) -> AnyPublisher<[Match], Error> {
-        let route = "upcoming?page=\(pageNumber)&per_page=\(pageSize)"
+        let route = "csgo/matches/upcoming?page=\(pageNumber)&per_page=\(pageSize)"
         return request(route: route, responseType: [Match].self)
     }
     
-    func loadMatchDetail(for match: Match) -> AnyPublisher<MatchPlayersDetailResult, Error> {
-        let route = "\(match.id)"
-        return request(route: route, responseType: MatchPlayersDetailResult.self)
+    func loadMatchDetail(for match: Match) -> AnyPublisher<MatchDetail, Error> {
+        let route = "matches/\(match.id)/opponents"
+        return request(route: route, responseType: MatchDetail.self)
     }
     
     private func request<T: Decodable>(route: String, responseType: T.Type) -> AnyPublisher<T, Error> {

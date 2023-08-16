@@ -8,17 +8,15 @@
 import Foundation
 
 //MARK: - Match Player Model
-struct Player: Codable {
+struct Player: Codable, Identifiable {
     let id: Int
-    let name: String
-    let firstName: String
-    let lastName: String
-    let imageURL: String
+    let name: String?
+    let firstName: String?
+    let imageURL: String?
     
     enum CodingKeys: String, CodingKey {
-        case id = "player_id"
+        case id = "id"
         case firstName = "first_name"
-        case lastName = "last_name"
         case imageURL = "image_url"
         case name
     }

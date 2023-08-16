@@ -12,7 +12,7 @@ struct Match: Codable {
     let name: String
     let id: Int
     let status: String
-    let opponents: [MatchOpponentResult]
+    let opponents: [MatchCardResult]
     let league: League
     let serie: Serie
     

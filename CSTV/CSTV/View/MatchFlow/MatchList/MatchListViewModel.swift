@@ -47,7 +47,9 @@ class MatchListViewViewModel: ObservableObject {
                 }
             } receiveValue: { [weak self] runningMatches, upcomingMatches in
                 let newMatches = runningMatches + upcomingMatches
-                self?.matches.append(contentsOf: newMatches)
+                DispatchQueue.main.async {
+                    self?.matches.append(contentsOf: newMatches)
+                }
                 self?.currentPage = nextPage
                 self?.reachedLastPage = runningMatches.isEmpty && upcomingMatches.isEmpty
             }
@@ -72,11 +74,6 @@ class MatchListViewViewModel: ObservableObject {
     }
     
     func fetchData() async {
-        do {
-            loadNextPage()
-            try await Task.sleep(for: .seconds(1))
-        } catch {
-            print("Error fetching data: \(error)")
-        }
+        loadNextPage()
     }
 }

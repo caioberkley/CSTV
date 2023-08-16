@@ -14,45 +14,39 @@ struct MatchOpponentCardView: View {
         ZStack(alignment: .leading) {
             Rectangle()
                 .foregroundColor(.clear)
-                .frame(width: 174, height: 54)
-                .background(Color(red: 0.15, green: 0.15, blue: 0.22))
+                .frame(width: 200, height: 54)
+                .background(Color.cellColor)
                 .cornerRadius(12)
             
             VStack(alignment: .leading, spacing: 0) {
-                Text(player.name)
+                Text(player.name ?? "")
                     .font(
                         Font.custom("Roboto", size: 14)
                             .weight(.bold)
                     )
                     .foregroundColor(.white)
-                    .frame(width: 77, alignment: .leading)
+                    .frame(width: 90, alignment: .leading)
                 
-                Text("\(player.firstName) \(player.lastName)")
+                Text(player.firstName ?? "")
                     .font(Font.custom("Roboto", size: 12))
-                    .foregroundColor(Color(red: 0.42, green: 0.42, blue: 0.49))
+                    .foregroundColor(Color.secondAlertColor)
                     .frame(width: 90, alignment: .leading)
             }
-            .padding(60)
+            .padding(70)
             
             VStack {
-                AsyncImage(url: URL(string: player.imageURL)) { image in
+                AsyncImage(url: URL(string: player.imageURL ?? "" )) { image in
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 48.49, height: 48.49)
-                        .cornerRadius(8)
                 } placeholder: {
-                    Color.gray
+                    Color.placeholderColor
                 }
                 .frame(width: 48.49, height: 48.49)
                 .cornerRadius(8)
             }
+            .offset(x: 10, y: -8)
         }
-    }
-}
-
-struct MatchOpponentCardView_Previews: PreviewProvider {
-    static var previews: some View {
-        MatchOpponentCardView(player: Player(id: 0, name: "Nickname", firstName: "First", lastName: "Last", imageURL: ""))
     }
 }

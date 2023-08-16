@@ -20,25 +20,31 @@ struct MatchCardView: View {
                     Text(match.parsedDate ?? "TBA")
                         .font(Font.custom("Roboto", size: 8).weight(.bold))
                         .foregroundColor(.white)
-                        .frame(width: 58, height: 25)
-                        .background(match.parsedDate == "AGORA" ? Color.red : Color.gray)
+                        .frame(width: widthModifier(for: match.parsedDate), height: 25)
+                        .background(colorModifier(for: match.parsedDate))
                         .cornerRadius(radius: 16, corners: [.topRight, .bottomLeft])
                 }
                 .padding(EdgeInsets(top: 0, leading: 8, bottom: 8, trailing: 0))
                 
                 HStack(spacing: 20) {
                     TeamView(team: match.team1)
+                        .frame(width: 60, height: 82)
+                        .padding(.trailing, 0)
                     
                     Text("vs")
                         .font(Font.custom("Roboto", size: 12))
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(Color.secondAlertColor)
+                        .frame(minWidth: 20)
+                        .layoutPriority(1)
                     
                     TeamView(team: match.team2)
+                        .frame(width: 60, height: 82)
+                        .padding(.leading, 0)
                 }
-                .padding(12)
+                .padding(EdgeInsets(top: 8, leading: 16, bottom: 24, trailing: 16))
                 
                 Divider()
-                    .background(Color.white)
+                    .background(Color.secondAlertColor)
                 
                 HStack {
                     AsyncImage(url: URL(string: match.league.imageURL ?? "")) { image in
@@ -46,11 +52,11 @@ struct MatchCardView: View {
                             .resizable()
                             .frame(width: 16, height: 16)
                     } placeholder: {
-                        Color.gray
+                        Color.placeholderColor
                             .frame(width: 16, height: 16)
                             .cornerRadius(30)
                     }
-                    Text("\(match.league.name) + \(match.serie.name ?? "TBA")")
+                    Text("\(match.league.name) \(match.serie.name != nil ? "-" : "") \(match.serie.name ?? "")")
                         .font(Font.custom("Roboto", size: 8))
                         .foregroundColor(.white)
                         .layoutPriority(1)
@@ -64,9 +70,17 @@ struct MatchCardView: View {
                 }
                 .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 8))
             }
-            .background(Color(red: 0.15, green: 0.15, blue: 0.22))
+            .background(Color.cellColor)
             .cornerRadius(16)
         }
+    }
+    
+    private func widthModifier (for parsedDate: String?) -> CGFloat {
+        parsedDate == "AGORA" ? 43 : 58
+    }
+    
+    private func colorModifier (for parsedDate: String?) -> Color {
+        parsedDate == "AGORA" ? Color.alertColor : Color.secondAlertColor
     }
 }
 
@@ -78,16 +92,20 @@ struct TeamView: View {
             AsyncImage(url: URL(string: team?.imageURL ?? "")) { image in
                 image
                     .resizable()
-                    .frame(width: 60, height: 60)
+                    .aspectRatio(contentMode: .fit)
             } placeholder: {
-                Color.gray
-                    .frame(width: 60, height: 60)
+                Color.placeholderColor
                     .cornerRadius(30)
             }
+            .frame(width: 60, height: 60)
+            
             Text(team?.name ?? "TBA")
                 .font(Font.custom("Roboto", size: 10))
+                .multilineTextAlignment(.center)
                 .foregroundColor(.white)
-        }.padding(.bottom, 18)
+                .lineLimit(2, reservesSpace: true)
+        }
+        .frame(width: 60, height: 82)
     }
 }
 
