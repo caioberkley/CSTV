@@ -15,8 +15,6 @@
 		C2F360732A83BAD400E0C3DA /* MatchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F360722A83BAD400E0C3DA /* MatchListView.swift */; };
 		C2F360752A83BAD500E0C3DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2F360742A83BAD500E0C3DA /* Assets.xcassets */; };
 		C2F360822A83BAD500E0C3DA /* CSTVTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F360812A83BAD500E0C3DA /* CSTVTests.swift */; };
-		C2F3608C2A83BAD500E0C3DA /* CSTVUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F3608B2A83BAD500E0C3DA /* CSTVUITests.swift */; };
-		C2F3608E2A83BAD500E0C3DA /* CSTVUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F3608D2A83BAD500E0C3DA /* CSTVUITestsLaunchTests.swift */; };
 		C2F3609B2A83ECFE00E0C3DA /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F3609A2A83ECFE00E0C3DA /* LaunchScreenView.swift */; };
 		C2F360A02A840B5200E0C3DA /* LaunchScreenStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F3609F2A840B5200E0C3DA /* LaunchScreenStateManager.swift */; };
 		C2F360A92A844EBB00E0C3DA /* MatchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F360A82A844EBB00E0C3DA /* MatchDetailView.swift */; };
@@ -59,8 +57,6 @@
 		C2F3607D2A83BAD500E0C3DA /* CSTVTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CSTVTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2F360812A83BAD500E0C3DA /* CSTVTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSTVTests.swift; sourceTree = "<group>"; };
 		C2F360872A83BAD500E0C3DA /* CSTVUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CSTVUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C2F3608B2A83BAD500E0C3DA /* CSTVUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSTVUITests.swift; sourceTree = "<group>"; };
-		C2F3608D2A83BAD500E0C3DA /* CSTVUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSTVUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C2F3609A2A83ECFE00E0C3DA /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
 		C2F3609C2A83F38C00E0C3DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C2F3609F2A840B5200E0C3DA /* LaunchScreenStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenStateManager.swift; sourceTree = "<group>"; };
@@ -129,7 +125,6 @@
 			children = (
 				C2F3606F2A83BAD400E0C3DA /* CSTV */,
 				C2F360802A83BAD500E0C3DA /* CSTVTests */,
-				C2F3608A2A83BAD500E0C3DA /* CSTVUITests */,
 				C2F3606E2A83BAD400E0C3DA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -161,15 +156,6 @@
 				C2F360812A83BAD500E0C3DA /* CSTVTests.swift */,
 			);
 			path = CSTVTests;
-			sourceTree = "<group>";
-		};
-		C2F3608A2A83BAD500E0C3DA /* CSTVUITests */ = {
-			isa = PBXGroup;
-			children = (
-				C2F3608B2A83BAD500E0C3DA /* CSTVUITests.swift */,
-				C2F3608D2A83BAD500E0C3DA /* CSTVUITestsLaunchTests.swift */,
-			);
-			path = CSTVUITests;
 			sourceTree = "<group>";
 		};
 		C2F360A12A841DF200E0C3DA /* Misc */ = {
@@ -424,8 +410,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C2F3608E2A83BAD500E0C3DA /* CSTVUITestsLaunchTests.swift in Sources */,
-				C2F3608C2A83BAD500E0C3DA /* CSTVUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

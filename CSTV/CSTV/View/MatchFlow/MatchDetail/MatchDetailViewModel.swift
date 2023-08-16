@@ -25,17 +25,25 @@ class MatchDetailViewModel: ObservableObject {
     
     func loadMatchDetail() {
         matchService.loadMatchDetail(for: match)
-            .sink(receiveCompletion: { completion in
+            .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
                 case .finished:
                     break
                 case .failure(let error):
-                    print("Error loading match detail: \(error)")
+                    self?.handleError(error)
                 }
             }, receiveValue: { [weak self] matchDetailResult in
-                self?.teamPlayers = matchDetailResult.team1
-                self?.teamOpponents = matchDetailResult.team2
+                self?.updateData(matchDetailResult)
             })
             .store(in: &cancellables)
+    }
+    
+    private func handleError(_ error: Error) {
+        print("Error loading match detail: \(error)")
+    }
+    
+    private func updateData(_ matchDetailResult: MatchDetail) {
+        teamPlayers = matchDetailResult.team1
+        teamOpponents = matchDetailResult.team2
     }
 }

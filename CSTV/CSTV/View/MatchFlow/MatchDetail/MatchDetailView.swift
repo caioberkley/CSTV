@@ -11,46 +11,71 @@ struct MatchDetailView: View {
     @StateObject private var viewModel: MatchDetailViewModel
     
     init(match: Match) {
-        _viewModel = StateObject(wrappedValue: MatchDetailViewModel(match: match, matchService: MatchService()))
+        let viewModel = MatchDetailViewModel(match: match, matchService: MatchService())
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                Color.accentColor.ignoresSafeArea()
-                VStack {
-                    MatchDetailHeaderView(match: viewModel.match).frame(height: 120)
-                    
-                    HStack {
-                        ScrollView(.vertical, showsIndicators: false) {
-                            VStack(spacing: 12) {
-                                ForEach(viewModel.teamPlayers) { player in
-                                    MatchPlayerCardView(player: player)
-                                        .padding(.vertical, 5)
-                                        .frame(width: 200, height: 54)
-                                }
-                            }.padding(20)
-                        }
-                        
-                        ScrollView(.vertical, showsIndicators: false) {
-                            VStack(spacing: 12) {
-                                ForEach(viewModel.teamOpponents) { player in
-                                    MatchOpponentCardView(player: player)
-                                        .padding(.vertical, 5)
-                                        .frame(width: 200, height: 54)
-                                }
-                            }.padding(20)
-                        }
-                    }
-                    .padding(20)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                }
-                .padding()
-                .preferredColorScheme(.dark)
+            contentView
                 .navigationBarTitle("\(viewModel.match.league.name) \(viewModel.match.serie.name != nil ? "-" : "") \(viewModel.match.serie.name ?? "")", displayMode: .inline)
                 .navigationBarBackButtonHidden(true)
                 .navigationBarItems(leading: BackButton())
+        }
+    }
+    
+    @ViewBuilder
+    private var contentView: some View {
+        ZStack {
+            Color.accentColor.ignoresSafeArea()
+            VStack {
+                MatchDetailHeaderView(match: viewModel.match)
+                    .frame(height: 120)
+                
+                HStack {
+                    TeamPlayersScrollView(players: viewModel.teamPlayers)
+                    TeamOpponentsScrollView(players: viewModel.teamOpponents)
+                }
+                .padding(20)
+                .frame(maxWidth: .infinity, alignment: .center)
             }
+            .padding()
+            .preferredColorScheme(.dark)
+        }
+        .padding(0)
+    }
+}
+
+struct TeamPlayersScrollView: View {
+    let players: [Player]
+    
+    var body: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(spacing: 12) {
+                ForEach(players) { player in
+                    MatchPlayerCardView(player: player)
+                        .padding(.vertical, 5)
+                        .frame(width: 200, height: 54)
+                }
+            }
+            .padding(20)
+        }
+    }
+}
+
+struct TeamOpponentsScrollView: View {
+    let players: [Player]
+    
+    var body: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(spacing: 12) {
+                ForEach(players) { player in
+                    MatchOpponentCardView(player: player)
+                        .padding(.vertical, 5)
+                        .frame(width: 200, height: 54)
+                }
+            }
+            .padding(20)
         }
     }
 }

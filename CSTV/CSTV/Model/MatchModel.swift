@@ -43,7 +43,7 @@ struct Match: Codable {
     var parsedStatus: String {
         switch self.status {
         case "finished": return "Finalizado"
-        case "not_started": return "Agendado"
+        case "not_started": return "Não Iniciado"
         case "running": return "Em Progresso"
         default:
             return "TBA"
