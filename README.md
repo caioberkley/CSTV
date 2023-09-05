@@ -2,6 +2,12 @@
 
 CSTV is an iOS app that showcases CS:GO matches taking place in various global tournaments. 
 
+## Summary
+- [Specs](#specs)
+- [Installation and Usage](#installation-and-usage)
+- [Contributing](#contributing)
+- [Screenshots and Demonstration Video](#screenshots-and-demonstration-video)
+
 ## Specs
 The project was developed using SwiftUI, with the Combine framework, and designed with the Model-View-ViewModel (MVVM) architecture. The app has an responsive layout to any supported device (iPhone/iPad and Mac with Apple silicon).
 
